@@ -5,375 +5,450 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#A3B18A">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
     <title>مكتبتي المدونة</title>
 
-    <style>
-        /* نفس التنسيقات السابقة - لم تتغير */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-        }
+  <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    }
+    
+    body {
+        background-color: #F5F1E8;
+        color: #344E41;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
 
-        body {
-            background-color: #F5F1E8;
-            color: #344E41;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+    .navbar {
+        background-color: #A3B18A;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #344E41;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
 
+    .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .nav-actions {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+    }
+
+    .nav-actions button {
+        background: none;
+        border: none;
+        font-size: 1.3rem;
+        cursor: pointer;
+        color: #344E41;
+        transition: transform 0.2s;
+    }
+
+    .nav-actions button:hover {
+        transform: scale(1.1);
+    }
+
+    .search-box {
+        background: #DAD7CD;
+        padding: 0.4rem 1rem;
+        border-radius: 30px;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .search-box input {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #344E41;
+        width: 180px;
+        font-size: 0.95rem;
+    }
+
+    .search-box input::placeholder {
+        color: #5f7a6b;
+    }
+
+    .main-container {
+        display: flex;
+        flex: 1;
+    }
+
+    .sidebar {
+        width: 220px;
+        background-color: #DAD7CD;
+        padding: 2rem 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+        border-left: 1px solid #b9c0aa;
+    }
+
+    .sidebar-item {
+        padding: 0.7rem 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: 0.2s;
+        color: #344E41;
+    }
+
+    .sidebar-item:hover, .sidebar-item.active {
+        background-color: #A3B18A;
+        color: #F5F1E8;
+    }
+
+    .stats {
+        margin-top: auto;
+        padding-top: 2rem;
+        font-size: 0.9rem;
+        border-top: 1px dashed #A3B18A;
+    }
+
+    .stats p {
+        margin: 0.3rem 0;
+    }
+
+    .content {
+        flex: 1;
+        padding: 2rem;
+    }
+
+    .header-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .add-btn {
+        background-color: #A3B18A;
+        color: #344E41;
+        border: none;
+        padding: 0.7rem 1.5rem;
+        border-radius: 30px;
+        font-weight: bold;
+        font-size: 1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        transition: 0.2s;
+    }
+
+    .add-btn:hover {
+        background-color: #8f9e78;
+    }
+
+    .filter-badge {
+        background: #DAD7CD;
+        padding: 0.5rem 1.2rem;
+        border-radius: 30px;
+        font-size: 0.9rem;
+    }
+
+    .books-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1.8rem;
+    }
+    
+    .book-card {
+        background: #FFFFFFCC;
+        backdrop-filter: blur(2px);
+        border-radius: 18px;
+        padding: 1.2rem 1rem 1rem 1rem;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+        transition: transform 0.2s, box-shadow 0.2s;
+        border: 1px solid #DAD7CD;
+        cursor: pointer;
+        position: relative;
+    }
+
+    .book-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+    }
+
+    .book-cover {
+        width: 100%;
+        height: 140px;
+        background: linear-gradient(145deg, #DAD7CD, #A3B18A);
+        border-radius: 14px;
+        margin-bottom: 0.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #344E41;
+        font-size: 3rem;
+        font-weight: 300;
+        box-shadow: inset 0 2px 6px rgba(0,0,0,0.1);
+        background-size: cover;
+        background-position: center;
+    }
+
+    .book-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 0.2rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .book-author {
+        font-size: 0.9rem;
+        color: #5f7a6b;
+        margin-bottom: 0.8rem;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        border-radius: 30px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        background-color: #DAD7CD;
+        color: #344E41;
+    }
+
+    .status-menu {
+        margin-top: 0.8rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .status-select {
+        background: #F5F1E8;
+        border: 1px solid #A3B18A;
+        border-radius: 20px;
+        padding: 0.3rem 0.6rem;
+        font-size: 0.75rem;
+        color: #344E41;
+        outline: none;
+        cursor: pointer;
+    }
+
+    .arrow-icon {
+        font-size: 1.2rem;
+        color: #A3B18A;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.4);
+        backdrop-filter: blur(3px);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .modal-content {
+        background: #F5F1E8;
+        border-radius: 32px;
+        padding: 2rem;
+        width: 90%;
+        max-width: 500px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        border: 2px solid #DAD7CD;
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .modal-header h2 {
+        color: #344E41;
+    }
+
+    .close-btn {
+        background: none;
+        border: none;
+        font-size: 2rem;
+        cursor: pointer;
+        color: #344E41;
+    }
+
+    .modal-detail {
+        margin: 1rem 0;
+        line-height: 1.6;
+    }
+
+    .modal-detail strong {
+        color: #5f7a6b;
+    }
+
+    .modal-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .modal-actions button {
+        flex: 1;
+        background: #A3B18A;
+        border: none;
+        padding: 0.8rem;
+        border-radius: 40px;
+        font-weight: bold;
+        color: #344E41;
+        cursor: pointer;
+        border: 1px solid #8f9e78;
+    }
+
+    .modal-actions button:hover {
+        background: #8f9e78;
+    }
+
+    #addBookModal .modal-content {
+        max-width: 600px;
+    }
+    
+    #addBookModal input, #addBookModal textarea {
+        width: 100%;
+        padding: 0.8rem;
+        border-radius: 20px;
+        border: 1px solid #DAD7CD;
+        background: #F5F1E8;
+        font-size: 1rem;
+        outline: none;
+    }
+
+    #addBookModal textarea {
+        resize: vertical;
+    }
+
+    #imagePreview {
+        width: 100%;
+        min-height: 120px;
+        border: 2px dashed #A3B18A;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #5f7a6b;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .toast {
+        visibility: hidden;
+        min-width: 200px;
+        background-color: #344E41;
+        color: #F5F1E8;
+        text-align: center;
+        border-radius: 40px;
+        padding: 12px;
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 1001;
+        font-size: 0.95rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .toast.show {
+        visibility: visible;
+        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    }
+
+    /* ===== تحسينات للشاشات الصغيرة (الموبايل) ===== */
+    @media (max-width: 760px) {
         .navbar {
-            background-color: #A3B18A;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: #344E41;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .nav-actions {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        .nav-actions button {
-            background: none;
-            border: none;
-            font-size: 1.3rem;
-            cursor: pointer;
-            color: #344E41;
-            transition: transform 0.2s;
-        }
-
-        .nav-actions button:hover {
-            transform: scale(1.1);
-        }
-
-        .search-box {
-            background: #DAD7CD;
-            padding: 0.4rem 1rem;
-            border-radius: 30px;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .search-box input {
-            background: transparent;
-            border: none;
-            outline: none;
-            color: #344E41;
-            width: 180px;
-            font-size: 0.95rem;
-        }
-
-        .search-box input::placeholder {
-            color: #5f7a6b;
-        }
-
-        .main-container {
-            display: flex;
-            flex: 1;
-        }
-
-        .sidebar {
-            width: 220px;
-            background-color: #DAD7CD;
-            padding: 2rem 1rem;
-            display: flex;
             flex-direction: column;
-            gap: 1.2rem;
-            border-left: 1px solid #b9c0aa;
-        }
-
-        .sidebar-item {
-            padding: 0.7rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: 0.2s;
-            color: #344E41;
-        }
-
-        .sidebar-item:hover, .sidebar-item.active {
-            background-color: #A3B18A;
-            color: #F5F1E8;
-        }
-
-        .stats {
-            margin-top: auto;
-            padding-top: 2rem;
-            font-size: 0.9rem;
-            border-top: 1px dashed #A3B18A;
-        }
-
-        .stats p {
-            margin: 0.3rem 0;
-        }
-
-        .content {
-            flex: 1;
-            padding: 2rem;
-        }
-
-        .header-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        .add-btn {
-            background-color: #A3B18A;
-            color: #344E41;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 30px;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: 0.2s;
-        }
-
-        .add-btn:hover {
-            background-color: #8f9e78;
-        }
-
-        .filter-badge {
-            background: #DAD7CD;
-            padding: 0.5rem 1.2rem;
-            border-radius: 30px;
-            font-size: 0.9rem;
-        }
-
-        .books-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1.8rem;
-        }
-
-        .book-card {
-            background: #FFFFFFCC;
-            backdrop-filter: blur(2px);
-            border-radius: 18px;
-            padding: 1.2rem 1rem 1rem 1rem;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
-            border: 1px solid #DAD7CD;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .book-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
-        }
-
-        .book-cover {
-            width: 100%;
-            height: 140px;
-            background: linear-gradient(145deg, #DAD7CD, #A3B18A);
-            border-radius: 14px;
-            margin-bottom: 0.8rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #344E41;
-            font-size: 3rem;
-            font-weight: 300;
-            box-shadow: inset 0 2px 6px rgba(0,0,0,0.1);
-            background-size: cover;
-            background-position: center;
-        }
-
-        .book-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 0.2rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .book-author {
-            font-size: 0.9rem;
-            color: #5f7a6b;
-            margin-bottom: 0.8rem;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 0.3rem 0.8rem;
-            border-radius: 30px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            background-color: #DAD7CD;
-            color: #344E41;
-        }
-
-        .status-menu {
-            margin-top: 0.8rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .status-select {
-            background: #F5F1E8;
-            border: 1px solid #A3B18A;
-            border-radius: 20px;
-            padding: 0.3rem 0.6rem;
-            font-size: 0.75rem;
-            color: #344E41;
-            outline: none;
-            cursor: pointer;
-        }
-
-        .arrow-icon {
-            font-size: 1.2rem;
-            color: #A3B18A;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.4);
-            backdrop-filter: blur(3px);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .modal-content {
-            background: #F5F1E8;
-            border-radius: 32px;
-            padding: 2rem;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            border: 2px solid #DAD7CD;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .modal-header h2 {
-            color: #344E41;
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            font-size: 2rem;
-            cursor: pointer;
-            color: #344E41;
-        }
-
-        .modal-detail {
-            margin: 1rem 0;
-            line-height: 1.6;
-        }
-
-        .modal-detail strong {
-            color: #5f7a6b;
-        }
-
-        .modal-actions {
-            display: flex;
             gap: 1rem;
-            margin-top: 2rem;
+            padding: 1rem;
         }
-
-        .modal-actions button {
-            flex: 1;
-            background: #A3B18A;
-            border: none;
-            padding: 0.8rem;
-            border-radius: 40px;
-            font-weight: bold;
-            color: #344E41;
-            cursor: pointer;
-            border: 1px solid #8f9e78;
-        }
-
-        .modal-actions button:hover {
-            background: #8f9e78;
-        }
-
-        #addBookModal .modal-content {
-            max-width: 600px;
-        }
-
-        #addBookModal input, #addBookModal textarea {
+        
+        .nav-actions {
             width: 100%;
-            padding: 0.8rem;
-            border-radius: 20px;
-            border: 1px solid #DAD7CD;
-            background: #F5F1E8;
-            font-size: 1rem;
-            outline: none;
-        }
-
-        #addBookModal textarea {
-            resize: vertical;
-        }
-
-        #imagePreview {
-            width: 100%;
-            min-height: 120px;
-            border: 2px dashed #A3B18A;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            color: #5f7a6b;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
         }
-
-        .toast {
-            visibility: hidden;
-            min-width: 200px;
-            background-color: #344E41;
-            color: #F5F1E8;
-            text-align: center;
-            border-radius: 40px;
-            padding: 12px;
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1001;
-            font-size: 0.95rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        
+        .search-box {
+            width: 100%;
         }
-
-        .toast.show {
-            visibility: visible;
-            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        
+        .search-box input {
+            width: 100%;
         }
+        
+        .main-container {
+            flex-direction: column;
+        }
+        
+        .sidebar {
+            width: 100%;
+            border-left: none;
+            border-bottom: 1px solid #b9c0aa;
+            padding: 1rem;
+        }
+        
+        .content {
+            padding: 1rem;
+        }
+        
+        .header-actions {
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .add-btn {
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .books-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .modal-content {
+            width: 95%;
+            padding: 1.5rem;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-actions {
+            flex-direction: column;
+        }
+    }
 
-        @keyframes fadein {from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;}}
-        @keyframes fadeout {from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;}}
-    </style>
+    @keyframes fadein {
+        from {bottom: 0; opacity: 0;}
+        to {bottom: 30px; opacity: 1;}
+    }
+    
+    @keyframes fadeout {
+        from {bottom: 30px; opacity: 1;}
+        to {bottom: 0; opacity: 0;}
+    }
+</style>
 </head>
 <body>
 
@@ -772,7 +847,6 @@
         if (e.target === addBookModal) closeAddModalFn();
     });
 
-    // تعديل الحالة من داخل المودال
     let selectedBookId = null;
     
     editStatusBtn.addEventListener('click', () => {
@@ -782,7 +856,7 @@
         const newStatus = prompt('أدخل الحالة الجديدة (reading, completed, wishlist):', book.status);
         if (newStatus && (newStatus === 'reading' || newStatus === 'completed' || newStatus === 'wishlist')) {
             book.status = newStatus;
-            saveBooksToStorage(); // 🔥 حفظ التعديل
+            saveBooksToStorage();
             renderBooks();
             openBookModal(selectedBookId);
             showToast('تم تعديل الحالة');
@@ -791,7 +865,6 @@
         }
     });
 
-    // زر مسح جميع الكتب
     clearStorageBtn.addEventListener('click', () => {
         if (confirm('هل أنت متأكد من حذف جميع الكتب؟')) {
             localStorage.removeItem('myLibraryBooks');
